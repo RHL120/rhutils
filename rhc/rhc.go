@@ -51,7 +51,7 @@ func countWords(f []byte) (ret int) {
 		if isWordSep(c) {
 			continue
 		}
-		if idx == len(f)-1 || isWordSep(f[idx+1]) {
+		if idx >= len(f)-1 || isWordSep(f[idx+1]) {
 			ret += 1
 		}
 	}
@@ -75,14 +75,14 @@ func main() {
 	cfg := loadCfg()
 	var files [][]byte
 	if len(cfg.files) > 0 {
-		files = make([][]byte, len(cfg.files)-1)
-		for _, i := range cfg.files {
+		files = make([][]byte, len(cfg.files))
+		for idx, i := range cfg.files {
 			content, err := ioutil.ReadFile(i)
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err)
 				os.Exit(1)
 			}
-			files = append(files, content)
+			files[idx] = content
 		}
 	} else {
 		files = make([][]byte, 1)
