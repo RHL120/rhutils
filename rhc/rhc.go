@@ -102,16 +102,19 @@ func main() {
 		// and call it if cfg.x is true but that seems a bit hackey.
 		// I don't feel like go works well with functional programming.
 		if cfg.lines {
-			total.lines += 1
-			fmt.Print(" ", countLines(i))
+			lc := countLines(i)
+			total.lines += lc
+			fmt.Print(" ", lc)
 		}
 		if cfg.words {
-			total.words += 1
-			fmt.Print(" ", countWords(i))
+			wc := countWords(i)
+			total.words += wc
+			fmt.Print(" ", wc)
 		}
 		if cfg.char {
-			total.words += 1
-			fmt.Print(" ", countChar(i))
+			cc := countChar(i)
+			total.char += cc
+			fmt.Print(" ", cc)
 		}
 		if len(cfg.files) >= 1 {
 			fmt.Println(" ", cfg.files[idx])
