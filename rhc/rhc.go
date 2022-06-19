@@ -29,11 +29,11 @@ func loadCfg() *config {
 	return &cfg
 }
 
-func countChar(f []byte) int {
-	return len(f)
+func countChar(f []byte) uint {
+	return uint(len(f))
 }
 
-func countLines(f []byte) (ret int) {
+func countLines(f []byte) (ret uint) {
 	for _, i := range f {
 		if i == '\n' {
 			ret += 1
@@ -46,7 +46,7 @@ func isWordSep(c byte) bool {
 	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
 }
 
-func countWords(f []byte) (ret int) {
+func countWords(f []byte) (ret uint) {
 	for idx, c := range f {
 		if isWordSep(c) {
 			continue
