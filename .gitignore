@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-rhcat
+rhcat/rhcat
 # Test binary, built with `go test -c`
 *.test
 
