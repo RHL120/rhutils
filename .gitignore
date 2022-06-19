@@ -5,6 +5,7 @@
 *.so
 *.dylib
 rhcat/rhcat
+rhc/rhc
 # Test binary, built with `go test -c`
 *.test
 
