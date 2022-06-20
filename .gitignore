@@ -6,6 +6,7 @@
 *.dylib
 rhcat/rhcat
 rhc/rhc
+rhfind/rhfind
 # Test binary, built with `go test -c`
 *.test
 
