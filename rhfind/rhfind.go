@@ -5,24 +5,25 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 )
 
 type config struct {
-	sp  []string
-	sep bool
+	name string
+	sp   []string
+	sep  bool
 }
 
 func loadConfig() (*config, error) {
 	var cfg config
+	flag.StringVar(&cfg.name, "name", "",
+		"filter in files that match the regexp")
 	flag.BoolVar(&cfg.sep, "sep", false,
 		"Add a seprator between starting paths")
 	flag.Parse()
-	args := flag.Args()
-	if len(args) < 1 {
-		cfg.sp = make([]string, 1)
-		cfg.sp[0] = "."
-	} else {
-		cfg.sp = flag.Args()
+	cfg.sp = flag.Args()
+	if len(cfg.sp) < 1 {
+		cfg.sp = append(cfg.sp, ".")
 	}
 	return &cfg, nil
 }
@@ -33,11 +34,16 @@ func main() {
 		fmt.Fprintln(os.Stderr, err)
 	}
 	f := func(path string, entry os.FileInfo, err error) error {
-		fmt.Println(path)
+		match, err := regexp.MatchString(cfg.name, entry.Name())
+		if err != nil {
+			return err
+		}
+		if match {
+			fmt.Println(path)
+		}
 		return nil
 	}
 	for idx, i := range cfg.sp {
-
 		if err := filepath.Walk(i, filepath.WalkFunc(f)); err != nil {
 			fmt.Printf("Failed to walk through directory %s, error: %v\n",
 				i, err)
