@@ -23,6 +23,7 @@ func cursesWrite(str string) {
 	cstr := C.CString(str)
 	C.curses_write(cstr)
 	C.free(unsafe.Pointer(cstr))
+	C.refresh()
 }
 
 func cursesWritef(format string, args ...interface{}) {
@@ -36,4 +37,8 @@ func cursesClear() {
 
 func cursesClean() {
 	C.endwin()
+}
+
+func cursesGetChar() rune {
+	return rune(C.getch())
 }
