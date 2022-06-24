@@ -11,6 +11,7 @@ import (
 type config struct {
 	cmd      string
 	interval int
+	limit    int
 	title    bool
 }
 
@@ -18,6 +19,8 @@ func loadConfig() *config {
 	var cfg config
 	flag.IntVar(&cfg.interval, "interval", 2,
 		"how much time should I sleep between runs")
+	flag.IntVar(&cfg.limit, "limit", 0,
+		"how many times should I run the command. Will run forever if 0")
 	flag.BoolVar(&cfg.title, "title", false,
 		"Should I display the title")
 	flag.Parse()
@@ -48,7 +51,7 @@ func main() {
 			}
 		}
 	}()
-	for {
+	for i := 0; i < cfg.limit || cfg.limit == 0; i++ {
 		cursesClear()
 		cmd := exec.Command("sh", "-c", cfg.cmd)
 		out, err := cmd.Output()
