@@ -53,6 +53,15 @@ func main() {
 	}()
 	for i := 0; i < cfg.limit || cfg.limit == 0; i++ {
 		cursesClear()
+		if cfg.title {
+			if i == 0 {
+				cursesWritef("executed %s %d time\n\n",
+					cfg.cmd, i+1)
+			} else {
+				cursesWritef("executed %s %d times\n\n",
+					cfg.cmd, i+1)
+			}
+		}
 		cmd := exec.Command("sh", "-c", cfg.cmd)
 		out, err := cmd.Output()
 		_ = out
@@ -69,4 +78,5 @@ func main() {
 			return
 		}
 	}
+	cursesClean()
 }
