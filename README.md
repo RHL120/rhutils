@@ -1,2 +1,2 @@
 # rhutils
-My implementation of some common
+My implementation of some common utils
